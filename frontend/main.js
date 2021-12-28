@@ -26,6 +26,7 @@ document.querySelector("#logout-link").addEventListener("click", () => {
     .forEach((s) => s.classList.add("hidden"));
   document.querySelector("#home-content").classList.remove("hidden");
   localStorage.removeItem("userId");
+  localStorage.removeItem("token");
 
   document.querySelector("#signup-link").classList.remove("hidden");
   document.querySelector("#login-link").classList.remove("hidden");
@@ -76,8 +77,9 @@ document
         password: password,
       });
       console.log(response);
-      const userId = response.data.user.id;
+      const userId = response.data.userId;
       localStorage.setItem("userId", userId);
+      localStorage.setItem("token", response.data.token);
       addHidden("#signup-link");
       addHidden("#login-link");
       removeHidden("#logout-link");
@@ -107,9 +109,10 @@ document
         email: email,
         password: password,
       });
-      console.log(response);
+      console.log(response.data.token);
       const userId = response.data.user.id;
       localStorage.setItem("userId", userId);
+      localStorage.setItem("token", response.data.token);
       if (localStorage.getItem("userId")) {
         addHidden("#signup-link");
         addHidden("#login-link");

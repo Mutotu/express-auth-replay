@@ -18,20 +18,29 @@ app.use(require("cors")());
 const models = require("./models");
 
 const createUser = async (req, res) => {
+  // console.log(req.body);
   try {
     const hashedPassword = bcrypt.hashSync(req.body.password, 10);
+    // console.log(hashedPassword);
+
     const user = await models.user.create({
       email: req.body.email,
       password: hashedPassword,
     });
 
-    const encryptedId = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
-
-    // res.json({message: 'ok', user})
-    res.json({ message: "ok", userId: encryptedId });
+    ////////newly added
+    // const { dataValues, ...notNeeded } = user;
+    console.log(process.env.JWT_SECRET);
+    const encryptedId = jwt.sign({ id: user.id }, process.env.JWT_SECRET, {
+      expiresIn: 3600,
+    });
+    res.status(201).json({
+      userId: user.id,
+      token: encryptedId,
+    });
+    // res.json({ message: "ok", userId: encryptedId });
   } catch (error) {
-    res.status(400);
-    res.json({ error: "email already taken" });
+    res.status(400).json(error);
   }
 };
 
@@ -44,14 +53,35 @@ const login = async (req, res) => {
         email: req.body.email,
       },
     });
-    if (user.password === req.body.password) {
-      //    res.json({message: 'login successful', user: user})
-      const encryptedId = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
-      res.json({ message: "login successful", user: encryptedId });
-    } else {
-      res.status(401);
-      res.json({ error: "login failed" });
+
+    /////////////////////its not loging beucase when password is compare it is numbers againit encripted ones
+    let passwordMatch = false;
+    if (user) {
+      passwordMatch = await bcrypt.compare(req.body.password, user.password);
+
+      if (passwordMatch) {
+        // const { dataValues, ...notNeeded } = user;
+        // Create a jwt authorization token to return for the found user.
+
+        const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+        console.log(token);
+        // Separate the user's data values into only the parts we will return.
+        // const { password, createdAt, updatedAt, id, ...userReturn } =
+        //   dataValues;
+
+        // userReturn.authorization = authorization;
+        res.status(200).json({ user: user, token: token });
+      }
     }
+    // if (user.password === req.body.password) {
+    //   console.log("inside olog");
+    //   //    res.json({message: 'login successful', user: user})
+    //   const encryptedId = jwt.sign({ userId: user.id }, process.env.JWT_SECRET);
+    //   res.json({ message: "login successful", user: encryptedId });
+    // } else {
+    //   res.status(401);
+    //   res.json({ error: "login failed on else statement" });
+    // }
   } catch (error) {
     res.status(400);
     res.json({ error: "login failed" });

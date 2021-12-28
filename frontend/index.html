@@ -1,52 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <link rel="stylesheet" href="/style.css">
-  <title>Auth!</title>
-</head>
-<body>
-  <nav>
-    <span id="home-link" class="nav-link">Home</span>
-    <span id="signup-link" class="nav-link">Sign Up</span>
-    <span id="login-link" class="nav-link">Login</span>
-    <span id="logout-link" class="nav-link">Logout</span>
-    <span id="profile-link" class="nav-link">Profile</span>
-  </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="/style.css" />
+    <title>Auth!</title>
+  </head>
+  <body>
+    <nav>
+      <span id="home-link" class="nav-link">Home</span>
+      <span id="signup-link" class="nav-link">Sign Up</span>
+      <span id="login-link" class="nav-link">Login</span>
+      <span id="logout-link" class="nav-link">Logout</span>
+      <span id="profile-link" class="nav-link">Profile</span>
+    </nav>
 
-  <section id="home-content">
-    welcome to the homepage
-  </section>
+    <section id="home-content">welcome to the homepage</section>
 
-  <section class="hidden" id="signup-content">
-    <form id="signup-form">
-      <label for="signup-email">Email</label>
-      <input type="text" id="signup-email">
-      
-      <label for="signup-password">Password</label>
-      <input type="password" id="signup-password">
+    <section class="hidden" id="signup-content">
+      <form id="signup-form">
+        <label for="signup-email">Email</label>
+        <input type="text" id="signup-email" />
 
-      <input type="submit" value="Sign Up!">
-    </form>
-  </section>
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" />
 
-  <section class="hidden" id="login-content">
-    <form id="login-form">
-      <label for="login-email">Email</label>
-      <input type="text" id="login-email">
-      
-      <label for="login-password">Password</label>
-      <input type="password" id="login-password">
+        <input type="submit" value="Sign Up!" />
+      </form>
+    </section>
 
-      <input type="submit" value="Log In!">
-    </form>
-  </section>
+    <section class="hidden" id="login-content">
+      <form id="login-form">
+        <label for="login-email">Email</label>
+        <input type="text" id="login-email" />
 
-  <section class="hidden" id="profile-content">
-    <div id="profile-info">Placeholder for profile info</div>
-  </section>
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" />
 
-  <script async defer src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js "></script>
-  <script async defer src="/main.js"></script>
-</body>
+        <input type="submit" value="Log In!" />
+      </form>
+    </section>
+
+    <section class="hidden" id="profile-content">
+      <div id="profile-info">Placeholder for profile info</div>
+    </section>
+
+    <script
+      async
+      defer
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js "
+    ></script>
+    <script async defer src="/main.js"></script>
+  </body>
 </html>
